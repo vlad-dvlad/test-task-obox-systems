@@ -1,10 +1,22 @@
 @import '../../styles/variables.scss';
 
-.heroLaunch {
+.heroSection {
   position: relative;
-  width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
 }
 
 .video {
@@ -17,6 +29,7 @@
   min-height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
+  z-index: 0;
 }
 
 .overlay {
@@ -25,14 +38,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  z-index: 1;
+}
+
+.blur {
+  width: 120%;
+  margin-left: -10%;
+  height: 250px;
+  background-color: #000;
+  position: absolute;
+  bottom: -180px;
+  filter: blur(40px);
+  z-index: 999;
+  opacity: 0.8;
 }
 
 .textContainer {
-  position: absolute;
-  bottom: 300px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 .neonText {
@@ -40,9 +73,98 @@
   font-size: var(--text-4xl);
   font-weight: bold;
   text-align: center;
-
-  // Neon glow animation
+  text-shadow: 1px 1px 3px black;
   animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+
+.scrollButtonContainer {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.scrollButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 50px;
+
+  &:hover {
+    transform: translateY(-5px);
+
+    .arrowDown {
+      animation-duration: 0.8s;
+    }
+
+    .scrollText {
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.arrowIcon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.arrowDown {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid var(--white);
+  animation: arrowBounce 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+
+  .scrollButton:hover & {
+    border-top-color: var(--neon-green);
+    filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.6));
+  }
+}
+
+.scrollText {
+  color: var(--white);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+@keyframes arrowBounce {
+  0%,
+  20% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.8;
+  }
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes neonGlow {
@@ -69,7 +191,6 @@
   }
 }
 
-// Responsive design
 @media (min-width: 768px) {
   .neonText {
     font-size: var(--text-6xl);

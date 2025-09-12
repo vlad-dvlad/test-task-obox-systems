@@ -1,39 +1,62 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useEffect, useRef } from 'react';
 import styles from './hero-launch.module.scss';
 
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 const HeroLaunch = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const scrollButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current && overlayRef.current) {
-      gsap.to(containerRef.current, {
-        opacity: 0,
-        y: -100,
-        ease: 'power2.out',
+    if (
+      sectionRef.current &&
+      bgRef.current &&
+      videoRef.current &&
+      scrollButtonRef.current
+    ) {
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: sectionRef.current,
+          scrub: true,
+          pin: true,
           start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
+          end: '+=100%',
         },
       });
 
-      gsap.to(overlayRef.current, {
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
+      // Animate video parallax
+      tl.to(videoRef.current, {
+        y: -100,
+        scale: 1.1,
+        duration: 6,
+        ease: 'none',
+      })
+        // Fade out scroll button
+        .to(
+          scrollButtonRef.current,
+          {
+            opacity: 0,
+            y: -50,
+            duration: 2,
+            ease: 'power2.out',
+          },
+          '-=4'
+        )
+        // Animate text
+        .to(
+          '.textContainer',
+          {
+            y: -200,
+            opacity: 0.3,
+            duration: 4,
+            ease: 'power2.out',
+          },
+          '-=6'
+        );
     }
 
     return () => {
@@ -42,8 +65,11 @@ const HeroLaunch = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className={styles.heroLaunch}>
+    <section ref={sectionRef} className={styles.heroSection}>
+      <div ref={bgRef} className={styles.bg}></div>
+
       <video
+        ref={videoRef}
         className={styles.video}
         autoPlay
         loop
@@ -51,16 +77,17 @@ const HeroLaunch = () => {
         playsInline
         preload='auto'
       >
-        <source src='/bg-video.mp4' type='video/mp4' />
+        <source src='/initial-bg.mp4' type='video/mp4' />
         Your browser does not support the video tag.
       </video>
 
-      <div ref={overlayRef} className={styles.overlay}></div>
+      <div className={styles.overlay}></div>
+      <div className={styles.blur}></div>
 
       <div className={styles.textContainer}>
         <h1 className={styles.neonText}>The HALL OF ZERO LIMITS</h1>
       </div>
-    </div>
+    </section>
   );
 };
 
