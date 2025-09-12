@@ -83,6 +83,14 @@
   text-shadow: 1px 1px 2px black;
 }
 
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: center;
+  margin-top: 5rem;
+}
+
 @keyframes neonGlow {
   0% {
     text-shadow:
@@ -104,5 +112,63 @@
       0 0 10px var(--neon-green),
       0 0 15px var(--neon-green),
       0 0 20px var(--neon-green);
+  }
+}
+
+@keyframes neonGlowRed {
+  0% {
+    text-shadow:
+      0 0 5px var(--neon-red),
+      0 0 10px var(--neon-red),
+      0 0 15px var(--neon-red),
+      0 0 20px var(--neon-red);
+  }
+  50% {
+    text-shadow:
+      0 0 10px var(--neon-red),
+      0 0 20px var(--neon-red),
+      0 0 30px var(--neon-red),
+      0 0 40px var(--neon-red),
+      0 0 50px var(--neon-red);
+  }
+  100% {
+    text-shadow:
+      0 0 5px var(--neon-red),
+      0 0 10px var(--neon-red),
+      0 0 15px var(--neon-red),
+      0 0 20px var(--neon-red);
+  }
+}
+
+.hintText {
+  color: var(--white);
+  font-size: var(--text-4xl);
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 3px black;
+  animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+
+.menuText {
+  color: var(--white);
+  font-size: var(--text-4xl);
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 3px black;
+  animation: neonGlowRed 1.5s ease-in-out infinite alternate;
+}
+
+// Responsive design for button group
+@media (max-width: 768px) {
+  .buttonGroup {
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttonGroup {
+    gap: 2.5rem;
+    margin-top: 3rem;
   }
 }

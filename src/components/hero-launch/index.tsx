@@ -28,14 +28,12 @@ const HeroLaunch = () => {
         },
       });
 
-      // Animate video parallax
       tl.to(videoRef.current, {
         y: -100,
         scale: 1.1,
         duration: 6,
         ease: 'none',
       })
-        // Fade out scroll button
         .to(
           scrollButtonRef.current,
           {
@@ -46,7 +44,6 @@ const HeroLaunch = () => {
           },
           '-=4'
         )
-        // Animate text
         .to(
           '.textContainer',
           {
@@ -86,6 +83,12 @@ const HeroLaunch = () => {
 
       <div className={styles.textContainer}>
         <h1 className={styles.neonText}>The HALL OF ZERO LIMITS</h1>
+        <p className={styles.description} data-text='Explore new paths.'>
+          Explore new paths.
+        </p>
+        <p className={styles.description} data-text='Find your gifts'>
+          Find your gifts
+        </p>
       </div>
     </section>
   );

@@ -1,0 +1,204 @@
+@import '../../styles/variables.scss';
+
+.cinematicButton {
+  position: relative;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 0;
+  padding: 3rem 6rem;
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 500px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  &:hover::before {
+    transform: translateX(100%);
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+  }
+
+  &:active {
+    transform: translateY(-3px) scale(0.97);
+  }
+}
+
+.primary {
+  border-image: linear-gradient(45deg, #1a5d3a, #2d7a4f, #1a5d3a) 1;
+  border-width: 2px;
+  border-style: solid;
+
+  .buttonText {
+    color: #1a5d3a;
+    text-shadow: 0 0 15px rgba(26, 93, 58, 0.6);
+    position: relative;
+    z-index: 2;
+  }
+
+  .buttonGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      rgba(26, 93, 58, 0.1),
+      rgba(45, 122, 79, 0.1)
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow:
+      0 0 40px rgba(26, 93, 58, 0.5),
+      0 0 80px rgba(26, 93, 58, 0.3),
+      0 0 120px rgba(26, 93, 58, 0.1),
+      inset 0 0 30px rgba(26, 93, 58, 0.1);
+
+    .buttonGlow {
+      opacity: 1;
+    }
+
+    .buttonText {
+      text-shadow: 0 0 25px rgba(26, 93, 58, 0.9);
+    }
+  }
+}
+
+.secondary {
+  border-image: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ff6b6b) 1;
+  border-width: 2px;
+  border-style: solid;
+
+  .buttonText {
+    color: #ff6b6b;
+    text-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+    position: relative;
+    z-index: 2;
+  }
+
+  .buttonGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      rgba(255, 107, 107, 0.1),
+      rgba(255, 142, 142, 0.1)
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow:
+      0 0 40px rgba(255, 107, 107, 0.5),
+      0 0 80px rgba(255, 107, 107, 0.3),
+      0 0 120px rgba(255, 107, 107, 0.1),
+      inset 0 0 30px rgba(255, 107, 107, 0.1);
+
+    .buttonGlow {
+      opacity: 1;
+    }
+
+    .buttonText {
+      text-shadow: 0 0 25px rgba(255, 107, 107, 0.9);
+    }
+  }
+}
+
+.buttonShine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.8s ease;
+}
+
+.cinematicButton:hover .buttonShine {
+  left: 100%;
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .cinematicButton {
+    min-width: 450px;
+    height: 130px;
+    padding: 2.5rem 5rem;
+    font-size: var(--text-3xl);
+    letter-spacing: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cinematicButton {
+    min-width: 400px;
+    height: 120px;
+    padding: 2.2rem 4.5rem;
+    font-size: var(--text-2xl);
+    letter-spacing: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cinematicButton {
+    min-width: 350px;
+    height: 100px;
+    padding: 2rem 4rem;
+    font-size: var(--text-xl);
+    letter-spacing: 3px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cinematicButton {
+    min-width: 300px;
+    height: 90px;
+    padding: 1.8rem 3.5rem;
+    font-size: var(--text-lg);
+    letter-spacing: 2px;
+  }
+}

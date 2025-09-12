@@ -1,7 +1,9 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import HintModal from '../../shared/hint/hint-modal';
 import styles from './main-section.module.scss';
+import CinematicButton from '../../shared/cinematic-button/cinematic-button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +11,7 @@ const MainSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (sectionRef.current && bgRef.current && videoRef.current) {
@@ -74,14 +77,23 @@ const MainSection = () => {
 
       <div className={styles.content}>
         <div className={styles.contentWrapper}>
-          <h2 className={styles.title}>Welcome to the Future</h2>
-          <p className={styles.description}>
-            Experience the next generation of technology with our innovative
-            solutions. Discover unlimited possibilities and transform your
-            digital world.
-          </p>
+          <div className={styles.buttonGroup}>
+            <CinematicButton
+              variant='primary'
+              onClick={() => setIsModalOpen(true)}
+            >
+              <span className={styles.hintText}>Show Hints</span>
+            </CinematicButton>
+            <CinematicButton
+              variant='secondary'
+              onClick={() => setIsModalOpen(true)}
+            >
+              <span className={styles.menuText}>Show Menu</span>
+            </CinematicButton>
+          </div>
         </div>
       </div>
+      <HintModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
