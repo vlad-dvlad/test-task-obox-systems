@@ -1,8 +1,10 @@
+import HeroLaunch from "./components/hero-launch/hero-launch";
+
 const App = () => {
   return (
-    <div>
-      Hello, test task
-    </div>
+    <>
+      <HeroLaunch />
+    </>
   );
 };
 
