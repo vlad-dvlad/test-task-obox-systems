@@ -1,0 +1,73 @@
+// CSS Variables for the project
+:root {
+  // Green theme colors
+  --green-1: #fbfefc;
+  --green-2: #f5fbf6;
+  --green-3: #e8f6eb;
+  --green-4: #daefdf;
+  --green-5: #c9e7d1;
+  --green-6: #b5dbbf;
+  --green-7: #99cba7;
+  --green-8: #71b585;
+  --green-9: #68ac7d;
+  --green-10: #5ca072;
+  --green-11: #387c50;
+  --green-12: #223a29;
+
+  // Neon colors
+  --neon-green: #2ecc71;
+  --neon-cyan: #00ffff;
+  --neon-pink: #ff00ff;
+  --neon-blue: #3498db;
+  --neon-purple: #9b59b6;
+  --neon-yellow: #ffeb3b;
+
+  // Basic colors
+  --white: #ffffff;
+  --black: #000000;
+  --red-500: #ef4444;
+
+  // Spacing
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  // Font sizes
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
+
+  // Z-index
+  --z-0: 0;
+  --z-10: 10;
+  --z-20: 20;
+  --z-30: 30;
+  --z-40: 40;
+  --z-50: 50;
+
+  // Animations
+  --animation-duration-fast: 0.15s;
+  --animation-duration-normal: 0.3s;
+  --animation-duration-slow: 0.5s;
+  --animation-duration-slower: 1s;
+  --animation-duration-slowest: 1.5s;
+
+  // Easing
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+}

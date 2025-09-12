@@ -1,0 +1,123 @@
+@import '../../../styles/variables.scss';
+
+.videoPlayerContainer {
+  --media-primary-color: var(--green-9);
+  --media-secondary-color: var(--green-8);
+  --media-accent-color: var(--green-7);
+  --media-control-background: rgba(0, 0, 0, 0.8);
+  --media-control-hover-background: rgba(0, 0, 0, 0.9);
+  --media-range-track-color: rgba(255, 255, 255, 0.2);
+  --media-range-track-color-active: var(--green-9);
+  --media-range-thumb-color: var(--green-9);
+  --media-range-thumb-color-hover: var(--green-8);
+}
+
+.mediaController {
+  width: 50%;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iframe {
+  width: 50%;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+// Media Chrome Custom Styles
+:global(.video-player-container) {
+  media-controller {
+    --media-primary-color: var(--green-9);
+    --media-secondary-color: var(--green-8);
+    --media-accent-color: var(--green-7);
+    --media-control-background: rgba(0, 0, 0, 0.8);
+    --media-control-hover-background: rgba(0, 0, 0, 0.9);
+    --media-range-track-color: rgba(255, 255, 255, 0.2);
+    --media-range-track-color-active: var(--green-9);
+    --media-range-thumb-color: var(--green-9);
+    --media-range-thumb-color-hover: var(--green-8);
+  }
+
+  media-control-bar {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  media-play-button,
+  media-mute-button,
+  media-fullscreen-button,
+  media-seek-backward-button,
+  media-seek-forward-button,
+  media-playback-rate-button {
+    color: var(--green-9);
+    transition: color var(--animation-duration-normal) var(--ease-in-out);
+
+    &:hover {
+      color: var(--green-8);
+    }
+  }
+
+  media-time-display {
+    color: var(--white);
+    font-family: monospace;
+    font-size: var(--text-sm);
+  }
+
+  media-time-range {
+    --media-range-track-color: rgba(255, 255, 255, 0.2);
+    --media-range-track-color-active: var(--green-9);
+    --media-range-thumb-color: var(--green-9);
+    --media-range-thumb-color-hover: var(--green-8);
+  }
+
+  media-volume-range {
+    --media-range-track-color: rgba(255, 255, 255, 0.2);
+    --media-range-track-color-active: var(--green-9);
+    --media-range-thumb-color: var(--green-9);
+    --media-range-thumb-color-hover: var(--green-8);
+  }
+
+  // Tooltip styles for better contrast
+  media-tooltip {
+    --media-tooltip-background: rgba(0, 0, 0, 0.95) !important;
+    --media-tooltip-color: var(--white) !important;
+    --media-tooltip-border-radius: 6px;
+    --media-tooltip-padding: 10px 14px;
+    --media-tooltip-font-size: var(--text-sm);
+    --media-tooltip-font-weight: 600;
+    --media-tooltip-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    --media-tooltip-border: 1px solid rgba(104, 172, 125, 0.4);
+  }
+
+  // Specific tooltip styles for all media buttons
+  media-seek-backward-button media-tooltip,
+  media-seek-forward-button media-tooltip,
+  media-play-button media-tooltip,
+  media-mute-button media-tooltip,
+  media-fullscreen-button media-tooltip,
+  media-playback-rate-button media-tooltip {
+    --media-tooltip-background: rgba(0, 0, 0, 0.95) !important;
+    --media-tooltip-color: var(--white) !important;
+    --media-tooltip-border: 1px solid rgba(104, 172, 125, 0.5);
+    --media-tooltip-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+
+  // Force tooltip styling with higher specificity
+  media-controller media-tooltip {
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: var(--white) !important;
+    border: 1px solid rgba(104, 172, 125, 0.4) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  }
+}
