@@ -14,12 +14,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.1",
     "gsap": "^3.13.0",
     "media-chrome": "^4.13.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-modal": "^3.16.3",
-    "react-player": "^3.3.2"
+    "react-player": "^3.3.2",
+    "react-router": "^7.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
