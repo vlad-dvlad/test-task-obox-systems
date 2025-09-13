@@ -7,6 +7,7 @@ interface IProps {
   title: string;
   children: React.ReactNode;
   showCloseButton?: boolean;
+  className?: string;
 }
 
 const Modal: FC<IProps> = ({
@@ -15,6 +16,7 @@ const Modal: FC<IProps> = ({
   title,
   children,
   showCloseButton = true,
+  className = '',
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -78,7 +80,7 @@ const Modal: FC<IProps> = ({
         className={styles.modal}
         onClick={e => e.stopPropagation()}
       >
-        <div className={styles.card}>
+        <div className={`${styles.card} ${className}`}>
           <div className={styles.cardHeader}>
             {showCloseButton && (
               <svg

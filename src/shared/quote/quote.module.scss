@@ -1,18 +1,6 @@
 @use '../../styles/variables.scss' as *;
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal {
+.quoteBlock {
   position: relative;
   width: 700px;
   max-width: 90%;
@@ -37,31 +25,6 @@
     0 calc(100% - 40px),
     0 40px
   );
-}
-
-.header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: var(--spacing-lg) var(--spacing-lg) 0 var(--spacing-xl);
-  z-index: 10;
-}
-
-.close {
-  color: #d9d9d9;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  transition: all var(--animation-duration-normal) ease;
-
-  &:hover {
-    color: #fff;
-    transform: scale(1.1);
-  }
 }
 
 /* Заголовок */
@@ -103,7 +66,7 @@
 
 // Responsive design
 @media (max-width: 768px) {
-  .modal {
+  .quoteBlock {
     width: 95vw;
     padding: var(--spacing-xl);
   }
@@ -118,10 +81,5 @@
 
   .text {
     font-size: var(--text-base);
-  }
-
-  .close {
-    width: 1.5rem;
-    height: 1.5rem;
   }
 }

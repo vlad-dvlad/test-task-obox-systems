@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import HintModal from '../../shared/hint/hint-modal';
 import styles from './main-section.module.scss';
 import CinematicButton from '../../shared/cinematic-button/cinematic-button';
-import Quote from '../../shared/quote/quote';
+import HexagonalMenu from '../hexagonal-menu';
 gsap.registerPlugin(ScrollTrigger);
 
 const MainSection = () => {
@@ -67,7 +67,6 @@ const MainSection = () => {
   return (
     <section ref={sectionRef} className={styles.mainSection}>
       <div ref={bgRef} className={styles.bg}></div>
-
       <video
         ref={videoRef}
         className={styles.video}
@@ -80,9 +79,7 @@ const MainSection = () => {
         <source src='/bg-video.mp4' type='video/mp4' />
         Your browser does not support the video tag.
       </video>
-
       <div className={styles.overlay}></div>
-
       <div className={styles.content}>
         <div className={styles.contentWrapper}>
           <div className={styles.buttonGroup}>
@@ -108,13 +105,17 @@ const MainSection = () => {
         </div>
       </div>
       <HintModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <Quote
+      {/* <Quote
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         title={`I am Loyal to that 
           Throne, No Matter Who Sits on it`}
         quote={`Much can be gleaned from these elite warriors who provide protection and intel to protect the crown and country. Though known for being physically skilled in battle, their minds are also among their greatest weapons—overcoming and embracing adversity and solving problems as quickly as they arise. Do the Dora's gifts reflect yours?`}
         author='Dora Milaje'
+      /> */}
+      <HexagonalMenu
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
       />
     </section>
   );

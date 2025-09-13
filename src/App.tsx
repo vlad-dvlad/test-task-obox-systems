@@ -1,8 +1,8 @@
 import HeroLaunch from './components/hero-launch';
 import MainSection from './components/main-section';
-import HexagonalMenuDemo from './components/hexagonal-menu-demo';
 import { Route, Routes } from 'react-router';
 import { RoutesE } from './routes';
+import InspirationGuide from './inspiration-garden/inspiration-garden';
 
 const App = () => {
   return (
@@ -13,10 +13,10 @@ const App = () => {
           <>
             <HeroLaunch />
             <MainSection />
-            <HexagonalMenuDemo />
           </>
         }
       />
+      <Route path={RoutesE.INSPIRATION_GARDEN} element={<InspirationGuide />} />
     </Routes>
   );
 };

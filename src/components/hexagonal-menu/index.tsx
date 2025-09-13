@@ -1,68 +1,54 @@
 import React from 'react';
 import styles from './hexagonal-menu.module.scss';
-import type { HexagonalMenuItem } from './types';
+import { hexagonalMenuItems } from './config';
+import { Link } from 'react-router';
+import Modal from '../../shared/modal/modal';
 
-interface HexagonalMenuProps {
-  items: HexagonalMenuItem[];
+interface IProps {
+  isOpen: boolean;
+  onClose: () => void;
   className?: string;
 }
 
-const HexagonalMenu: React.FC<HexagonalMenuProps> = ({
-  items,
+const HexagonalMenu: React.FC<IProps> = ({
+  isOpen,
+  onClose,
   className = '',
 }) => {
-  const handleItemClick = (item: HexagonalMenuItem) => {
-    if (item.onClick) {
-      item.onClick();
-    }
-  };
-
   return (
-    <div className={`${styles.hexagonMenu} ${className}`}>
-      {items.map(item => (
-        <div key={item.id} className={styles.hexagonItem}>
-          <div className={styles.hexItem}>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div className={styles.hexItem}>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <a
-            className={styles.hexContent}
-            href={item.href}
-            onClick={e => {
-              if (item.onClick) {
-                e.preventDefault();
-                handleItemClick(item);
-              }
-            }}
-          >
-            <span className={styles.hexContentInner}>
-              <span className={styles.icon}>
-                <i className={item.icon}></i>
-              </span>
-              <span className={styles.title}>{item.title}</span>
-            </span>
-            <svg
-              viewBox='0 0 173.20508075688772 200'
-              height='200'
-              width='174'
-              version='1.1'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z'
-                fill='var(--green-12)'
-              />
-            </svg>
-          </a>
+    <Modal
+      title='Hexagonal Menu'
+      isOpen={isOpen}
+      onClose={onClose}
+      className={styles.menu}
+    >
+      <div style={{ width: '100%', height: '100%' }}>
+        <div className={`${styles.hexagonMenu} ${className}`}>
+          {hexagonalMenuItems.map(item => (
+            <div key={item.id} className={styles.hexagonItem}>
+              <div className={styles.hexItem}>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <div className={styles.hexItem}>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <Link className={styles.hexContent} to={item.id}>
+                <span className={styles.hexContentInner}>
+                  <span className={styles.icon}>
+                    <i className={item.icon}></i>
+                  </span>
+                  <span className={styles.title}>{item.title}</span>
+                </span>
+              </Link>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </Modal>
   );
 };
 
