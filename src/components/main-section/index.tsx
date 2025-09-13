@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import HintModal from '../../shared/hint/hint-modal';
 import styles from './main-section.module.scss';
 import CinematicButton from '../../shared/cinematic-button/cinematic-button';
-
+import Quote from '../../shared/quote/quote';
 gsap.registerPlugin(ScrollTrigger);
 
 const MainSection = () => {
@@ -12,6 +12,14 @@ const MainSection = () => {
   const bgRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
 
   useEffect(() => {
     if (sectionRef.current && bgRef.current && videoRef.current) {
@@ -80,13 +88,19 @@ const MainSection = () => {
           <div className={styles.buttonGroup}>
             <CinematicButton
               variant='primary'
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                scrollToBottom();
+                setTimeout(() => setIsModalOpen(true), 500);
+              }}
             >
               <span className={styles.hintText}>Show Hints</span>
             </CinematicButton>
             <CinematicButton
               variant='secondary'
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                scrollToBottom();
+                setTimeout(() => setIsQuoteOpen(true), 500);
+              }}
             >
               <span className={styles.menuText}>Show Menu</span>
             </CinematicButton>
@@ -94,6 +108,14 @@ const MainSection = () => {
         </div>
       </div>
       <HintModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <Quote
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        title={`I am Loyal to that 
+          Throne, No Matter Who Sits on it`}
+        quote={`Much can be gleaned from these elite warriors who provide protection and intel to protect the crown and country. Though known for being physically skilled in battle, their minds are also among their greatest weapons—overcoming and embracing adversity and solving problems as quickly as they arise. Do the Dora's gifts reflect yours?`}
+        author='Dora Milaje'
+      />
     </section>
   );
 };

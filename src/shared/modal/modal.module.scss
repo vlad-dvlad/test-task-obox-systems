@@ -1,0 +1,229 @@
+@import '../../styles/variables.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+  position: relative;
+  z-index: 10001;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card {
+  position: relative;
+  max-width: 38rem;
+  min-height: 20rem;
+  width: 90vw;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(46, 234, 157, 0.3);
+  border-radius: 1rem;
+  background: radial-gradient(
+    ellipse at right top,
+    #107667ed 0%,
+    #151419 47%,
+    #151419 100%
+  );
+  opacity: 0.95;
+  transition: all 0.3s ease;
+  animation: shadowPulse 3s ease-in-out infinite alternate;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+    animation: shadowPulseHover 2s ease-in-out infinite alternate;
+  }
+}
+
+.cardHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0 1.5rem;
+  z-index: 10;
+}
+
+.close {
+  color: #d9d9d9;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
+}
+
+.cardBody {
+  width: 100%;
+  padding: 2rem 2rem 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+
+.content {
+  flex: 1;
+}
+
+.textContainer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.modalTitle {
+  position: relative;
+  font-size: var(--text-xl);
+  color: #252839;
+  -webkit-text-stroke: 0.2vw #383d52;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.modalTitle::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  color: #01fe87;
+  -webkit-text-stroke: 0vw #383d52;
+  border-right: 2px solid #01fe87;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: textByChar 4s steps(18) infinite;
+}
+
+.modalTitle:nth-child(2)::before {
+  animation-delay: 1s;
+  animation: textByChar 4s steps(18) infinite;
+}
+
+.modalTitle:nth-child(3)::before {
+  animation-delay: 2s;
+  animation: textByChar 3s steps(15) infinite;
+}
+
+.modalContent {
+  color: #cccccc;
+  font-size: var(--text-lg);
+  letter-spacing: 0.031rem;
+  line-height: 1.6;
+  text-align: left;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shadowPulse {
+  0% {
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.8),
+      0 0 20px rgba(46, 234, 157, 0.3),
+      0 0 40px rgba(46, 234, 157, 0.1),
+      0 0 60px rgba(46, 234, 157, 0.05);
+  }
+  100% {
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.8),
+      0 0 40px rgba(46, 234, 157, 0.6),
+      0 0 80px rgba(46, 234, 157, 0.3),
+      0 0 120px rgba(46, 234, 157, 0.1);
+  }
+}
+
+@keyframes shadowPulseHover {
+  0% {
+    box-shadow:
+      0 30px 60px -12px rgba(0, 0, 0, 0.9),
+      0 0 30px rgba(46, 234, 157, 0.5),
+      0 0 60px rgba(46, 234, 157, 0.3),
+      0 0 90px rgba(46, 234, 157, 0.2),
+      0 0 120px rgba(46, 234, 157, 0.1);
+  }
+  100% {
+    box-shadow:
+      0 30px 60px -12px rgba(0, 0, 0, 0.9),
+      0 0 50px rgba(46, 234, 157, 0.8),
+      0 0 100px rgba(46, 234, 157, 0.5),
+      0 0 150px rgba(46, 234, 157, 0.3),
+      0 0 200px rgba(46, 234, 157, 0.1);
+  }
+}
+
+@keyframes textByChar {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card {
+    width: 95vw;
+    min-height: 18rem;
+  }
+
+  .cardBody {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+
+  .modalTitle {
+    font-size: var(--text-lg);
+  }
+
+  .modalContent {
+    font-size: var(--text-base);
+  }
+}
