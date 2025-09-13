@@ -2,7 +2,8 @@ import HeroLaunch from './components/hero-launch';
 import MainSection from './components/main-section';
 import { Route, Routes } from 'react-router';
 import { RoutesE } from './routes';
-import InspirationGuide from './inspiration-garden/inspiration-garden';
+import InspirationGarden from './inspiration-garden/inspiration-garden';
+import FindYourGift from './find-your-gift/find-your-gift';
 
 const App = () => {
   return (
@@ -16,7 +17,11 @@ const App = () => {
           </>
         }
       />
-      <Route path={RoutesE.INSPIRATION_GARDEN} element={<InspirationGuide />} />
+      <Route
+        path={RoutesE.INSPIRATION_GARDEN}
+        element={<InspirationGarden />}
+      />
+      <Route path={RoutesE.FIND_YOUR_GIFT} element={<FindYourGift />} />
     </Routes>
   );
 };

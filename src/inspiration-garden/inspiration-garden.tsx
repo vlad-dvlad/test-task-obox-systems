@@ -1,29 +1,89 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import Quote from '../shared/quote/quote';
+import BackToHomeButton from '../shared/back-to-home-button/back-to-home-button';
 import { quotes } from './config';
 import styles from './inspiration-garden.module.scss';
 
 const InspirationGarden = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
   const quoteRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [visibleQuotes, setVisibleQuotes] = useState<Set<number>>(new Set());
 
+  // Reset scroll position when component mounts or route changes
   useEffect(() => {
+    // Use setTimeout to ensure DOM is fully loaded
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Reset immediately and after a short delay
+    resetScroll();
+    const timeoutId = setTimeout(resetScroll, 100);
+
+    setScrollProgress(0);
+    setVisibleQuotes(new Set());
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
+
+  // Additional scroll reset after component is fully mounted
+  useEffect(() => {
+    const checkAndResetScroll = () => {
+      if (window.pageYOffset > 0 || document.documentElement.scrollTop > 0) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
+    };
+
+    // Check after a longer delay to ensure everything is loaded
+    const timeoutId = setTimeout(checkAndResetScroll, 200);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  // Prevent scroll restoration on page load
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!containerRef.current) return;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (!containerRef.current) {
+            ticking = false;
+            return;
+          }
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const containerHeight = rect.height;
+          const windowHeight = window.innerHeight;
 
-      // Calculate scroll progress
-      const scrolled = Math.abs(rect.top);
-      const maxScroll = containerHeight - windowHeight;
-      const progress = Math.min(1, Math.max(0, scrolled / maxScroll));
-      setScrollProgress(progress);
+          // Calculate progress based on scroll position
+          const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const documentHeight =
+            document.documentElement.scrollHeight - windowHeight;
+
+          let progress = 0;
+
+          if (documentHeight > 0) {
+            progress = scrollTop / documentHeight;
+          }
+
+          setScrollProgress(Math.min(1, Math.max(0, progress)));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const observer = new IntersectionObserver(
@@ -62,10 +122,6 @@ const InspirationGarden = () => {
     };
   }, []);
 
-  const handleBackToHome = () => {
-    navigate('/');
-  };
-
   return (
     <div ref={containerRef} className={styles.container}>
       {/* Progress Bar */}
@@ -86,24 +142,7 @@ const InspirationGarden = () => {
         </div>
       </div>
 
-      {/* Back to Home Button */}
-      <button className={styles.backButton} onClick={handleBackToHome}>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth='1.5'
-          stroke='currentColor'
-          className={styles.backIcon}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18'
-          />
-        </svg>
-        <span>Back to Home</span>
-      </button>
+      <BackToHomeButton />
 
       {/* Quotes */}
       {quotes.map((quote, index) => (
