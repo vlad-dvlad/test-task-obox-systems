@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useGlobalLoader } from '../../hooks/useGlobalLoader';
 import styles from './hero-launch.module.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,13 +13,22 @@ const HeroLaunch = () => {
   const scrollButtonRef = useRef<HTMLDivElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const { stopLoading } = useGlobalLoader(false);
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
+    // Затримка перед приховуванням лоадера для кращого UX
+    setTimeout(() => {
+      stopLoading();
+    }, 500);
   };
 
   const handleVideoError = () => {
     setIsVideoLoaded(true);
+    // Приховуємо лоадер навіть при помилці
+    setTimeout(() => {
+      stopLoading();
+    }, 500);
   };
 
   const handleUserInteraction = useCallback(async () => {
@@ -151,21 +161,16 @@ const HeroLaunch = () => {
         x5-video-player-fullscreen='true'
       >
         <source
+          src='/initial-bg-mobile.mp4'
+          type='video/mp4'
+          media='(max-width: 768px)'
+        />
+        <source
           src='/initial-bg-h265.mp4'
           type='video/mp4; codecs="hev1.1.6.L93.B0"'
-          media='(min-width: 1024px)'
+          media='(min-width: 769px)'
         />
-        <source
-          src='/initial-bg.webm'
-          type='video/webm'
-          media='(min-width: 768px)'
-        />
-        <source
-          src='/initial-bg-1080p.mp4'
-          type='video/mp4'
-          media='(min-width: 1024px)'
-        />
-        <source src='/initial-bg-optimized.mp4' type='video/mp4' />
+        <source src='/initial-bg-mobile.mp4' type='video/mp4' />
         Your browser does not support the video tag.
       </video>
 

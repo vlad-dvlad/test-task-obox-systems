@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router';
 import { Suspense, lazy } from 'react';
 import { RoutesE } from './routes';
-import { LoadingSpinner } from './shared';
+import { LoadingSpinner, GlobalLoader } from './shared';
+import { useGlobalLoader } from './hooks/useGlobalLoader';
 
 const Home = lazy(() => import('./pages/home/home'));
 const InspirationGarden = lazy(
@@ -15,23 +16,28 @@ const OriginStory = lazy(() => import('./pages/origin-story/origin-story'));
 const ZeroSugar = lazy(() => import('./pages/zero-sugar/zero-sugar'));
 
 const App = () => {
+  const { isLoading, stopLoading } = useGlobalLoader(true);
+
   return (
-    <Suspense
-      fallback={<LoadingSpinner fullScreen text='Loading experience...' />}
-    >
-      <Routes>
-        <Route path={RoutesE.HOME} element={<Home />} />
-        <Route
-          path={RoutesE.INSPIRATION_GARDEN}
-          element={<InspirationGarden />}
-        />
-        <Route path={RoutesE.FIND_YOUR_GIFT} element={<FindYourGift />} />
-        <Route path={RoutesE.THE_LIBRARY} element={<TheLibrary />} />
-        <Route path={RoutesE.ORIGIN_STORIES} element={<OriginStory />} />
-        <Route path={RoutesE.SPRITE_ZERO_SUGAR} element={<ZeroSugar />} />
-        <Route path='*' element={<Home />} />
-      </Routes>
-    </Suspense>
+    <>
+      <GlobalLoader isLoading={isLoading} onComplete={stopLoading} />
+      <Suspense
+        fallback={<LoadingSpinner fullScreen text='Loading experience...' />}
+      >
+        <Routes>
+          <Route path={RoutesE.HOME} element={<Home />} />
+          <Route
+            path={RoutesE.INSPIRATION_GARDEN}
+            element={<InspirationGarden />}
+          />
+          <Route path={RoutesE.FIND_YOUR_GIFT} element={<FindYourGift />} />
+          <Route path={RoutesE.THE_LIBRARY} element={<TheLibrary />} />
+          <Route path={RoutesE.ORIGIN_STORIES} element={<OriginStory />} />
+          <Route path={RoutesE.SPRITE_ZERO_SUGAR} element={<ZeroSugar />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </Suspense>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { HintModal, CinematicButton } from '../../shared';
+import { useGlobalLoader } from '../../hooks/useGlobalLoader';
 import styles from './main-section.module.scss';
 import { HexagonalMenu } from '../';
 gsap.registerPlugin(ScrollTrigger);
@@ -14,6 +15,7 @@ const MainSection = () => {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const { stopLoading } = useGlobalLoader(false);
 
   const scrollToBottom = () => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -21,11 +23,19 @@ const MainSection = () => {
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
+    // Затримка перед приховуванням лоадера для кращого UX
+    setTimeout(() => {
+      stopLoading();
+    }, 500);
   };
 
   const handleVideoError = () => {
     console.warn('Video failed to load, using fallback');
     setIsVideoLoaded(true);
+    // Приховуємо лоадер навіть при помилці
+    setTimeout(() => {
+      stopLoading();
+    }, 500);
   };
 
   const handleUserInteraction = useCallback(async () => {
@@ -147,13 +157,13 @@ const MainSection = () => {
       >
         <source
           src='/bg-video-optimized.mp4'
-          type='video/mp4; codecs="avc1.42E01E"'
-          media='(min-width: 1024px)'
+          type='video/mp4'
+          media='(min-width: 769px)'
         />
         <source
-          src='/bg-video.mp4'
+          src='/bg-video-optimized.mp4'
           type='video/mp4'
-          media='(max-width: 1023px)'
+          media='(max-width: 768px)'
         />
         <source src='/bg-video-optimized.mp4' type='video/mp4' />
         Your browser does not support the video tag.
