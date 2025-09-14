@@ -1,0 +1,85 @@
+@use '../../styles/variables.scss' as *;
+
+.quoteBlock {
+  position: relative;
+  width: 700px;
+  max-width: 90%;
+  padding: var(--spacing-2xl);
+  background: #0a0a0a;
+  border: 2px solid #00ff9a;
+  box-shadow: 0 0 25px rgba(0, 255, 154, 0.6);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--spacing-lg);
+
+  clip-path: polygon(
+    40px 0%,
+    calc(100% - 40px) 0,
+    100% 40px,
+    100% calc(100% - 40px),
+    calc(100% - 40px) 100%,
+    40px 100%,
+    0 calc(100% - 40px),
+    0 40px
+  );
+}
+
+/* Заголовок */
+.title {
+  font-size: var(--text-3xl);
+  font-weight: bold;
+  color: #00ff9a;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 255, 154, 0.9);
+  margin-bottom: var(--spacing-lg);
+}
+
+.author {
+  color: var(--neon-cyan);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+  margin-bottom: var(--spacing-md);
+}
+
+.text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .quoteBlock {
+    width: 95vw;
+    padding: var(--spacing-xl);
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .author {
+    font-size: var(--text-lg);
+  }
+
+  .text {
+    font-size: var(--text-base);
+  }
+}

@@ -1,34 +1,36 @@
-import HeroLaunch from './components/hero-launch';
-import MainSection from './components/main-section';
 import { Route, Routes } from 'react-router';
+import { Suspense, lazy } from 'react';
 import { RoutesE } from './routes';
-import InspirationGarden from './inspiration-garden/inspiration-garden';
-import FindYourGift from './find-your-gift/find-your-gift';
-import TheLibrary from './pages/the-library/the-library';
-import OriginStory from './pages/origin-story/origin-story';
-import ZeroSugar from './pages/zero-sugar/zero-sugar';
+import { LoadingSpinner } from './shared';
+
+const Home = lazy(() => import('./pages/home/home'));
+const InspirationGarden = lazy(
+  () => import('./pages/inspiration-garden/inspiration-garden')
+);
+const FindYourGift = lazy(
+  () => import('./pages/find-your-gift/find-your-gift')
+);
+const TheLibrary = lazy(() => import('./pages/the-library/the-library'));
+const OriginStory = lazy(() => import('./pages/origin-story/origin-story'));
+const ZeroSugar = lazy(() => import('./pages/zero-sugar/zero-sugar'));
 
 const App = () => {
   return (
-    <Routes>
-      <Route
-        path={RoutesE.HOME}
-        element={
-          <>
-            <HeroLaunch />
-            <MainSection />
-          </>
-        }
-      />
-      <Route
-        path={RoutesE.INSPIRATION_GARDEN}
-        element={<InspirationGarden />}
-      />
-      <Route path={RoutesE.FIND_YOUR_GIFT} element={<FindYourGift />} />
-      <Route path={RoutesE.THE_LIBRARY} element={<TheLibrary />} />
-      <Route path={RoutesE.ORIGIN_STORIES} element={<OriginStory />} />
-      <Route path={RoutesE.SPRITE_ZERO_SUGAR} element={<ZeroSugar />} />
-    </Routes>
+    <Suspense
+      fallback={<LoadingSpinner fullScreen text='Loading experience...' />}
+    >
+      <Routes>
+        <Route path={RoutesE.HOME} element={<Home />} />
+        <Route
+          path={RoutesE.INSPIRATION_GARDEN}
+          element={<InspirationGarden />}
+        />
+        <Route path={RoutesE.FIND_YOUR_GIFT} element={<FindYourGift />} />
+        <Route path={RoutesE.THE_LIBRARY} element={<TheLibrary />} />
+        <Route path={RoutesE.ORIGIN_STORIES} element={<OriginStory />} />
+        <Route path={RoutesE.SPRITE_ZERO_SUGAR} element={<ZeroSugar />} />
+      </Routes>
+    </Suspense>
   );
 };
 
