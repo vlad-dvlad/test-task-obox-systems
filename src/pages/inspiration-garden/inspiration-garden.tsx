@@ -12,16 +12,13 @@ const InspirationGarden = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [visibleQuotes, setVisibleQuotes] = useState<Set<number>>(new Set());
 
-  // Reset scroll position when component mounts or route changes
   useEffect(() => {
-    // Use setTimeout to ensure DOM is fully loaded
     const resetScroll = () => {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     };
 
-    // Reset immediately and after a short delay
     resetScroll();
     const timeoutId = setTimeout(resetScroll, 100);
 
@@ -31,7 +28,6 @@ const InspirationGarden = () => {
     return () => clearTimeout(timeoutId);
   }, [location.pathname]);
 
-  // Additional scroll reset after component is fully mounted
   useEffect(() => {
     const checkAndResetScroll = () => {
       if (window.pageYOffset > 0 || document.documentElement.scrollTop > 0) {
@@ -41,13 +37,11 @@ const InspirationGarden = () => {
       }
     };
 
-    // Check after a longer delay to ensure everything is loaded
     const timeoutId = setTimeout(checkAndResetScroll, 200);
 
     return () => clearTimeout(timeoutId);
   }, []);
 
-  // Prevent scroll restoration on page load
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -67,7 +61,6 @@ const InspirationGarden = () => {
 
           const windowHeight = window.innerHeight;
 
-          // Calculate progress based on scroll position
           const scrollTop =
             window.pageYOffset || document.documentElement.scrollTop;
           const documentHeight =
@@ -124,7 +117,6 @@ const InspirationGarden = () => {
 
   return (
     <div ref={containerRef} className={styles.container}>
-      {/* Progress Bar */}
       <div className={styles.progressBar}>
         <div
           className={styles.progressFill}
@@ -144,7 +136,6 @@ const InspirationGarden = () => {
 
       <BackToHomeButton />
 
-      {/* Quotes */}
       {quotes.map((quote, index) => (
         <div key={quote.title} className={styles.quoteSection}>
           <div

@@ -33,10 +33,8 @@ const VideoPreview: FC<IProps> = ({
 
     if (!container || !player || !title || !subtitle) return;
 
-    // Initial setup
     gsap.set([title, subtitle], { opacity: 0, y: 20 });
 
-    // Entry animation
     const tl = gsap.timeline({ delay: 0.5 });
     tl.to(title, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' });
     tl.to(
@@ -45,7 +43,6 @@ const VideoPreview: FC<IProps> = ({
       '-=0.5'
     );
 
-    // Hover animations
     const handleMouseEnter = () => {
       gsap.to(player, {
         scale: 1.02,
@@ -94,7 +91,6 @@ const VideoPreview: FC<IProps> = ({
   return (
     <div ref={containerRef} className={styles.videoPreview}>
       <div ref={playerRef} className={styles.playerContainer}>
-        {/* Video Player */}
         <div className={styles.videoPlayer}>
           <ReactPlayer
             src={src}
@@ -116,7 +112,6 @@ const VideoPreview: FC<IProps> = ({
           />
         </div>
 
-        {/* Overlay with title and subtitle */}
         {!isPlaying && (
           <div className={styles.overlay}>
             <div className={styles.content}>
@@ -139,7 +134,6 @@ const VideoPreview: FC<IProps> = ({
         )}
       </div>
 
-      {/* Animated background elements */}
       <div className={styles.backgroundElements}>
         <div className={styles.circle1}></div>
         <div className={styles.circle2}></div>

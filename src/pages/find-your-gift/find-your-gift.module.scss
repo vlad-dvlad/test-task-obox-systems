@@ -20,7 +20,6 @@
   perspective: 1000px;
 }
 
-// Progress Bar
 .progressContainer {
   margin-bottom: var(--spacing-2xl);
 }
@@ -67,7 +66,6 @@
   font-weight: 500;
 }
 
-// Question Card
 .questionCard {
   background: rgba(0, 0, 0, 0.6);
   border: none;
@@ -249,7 +247,6 @@
   color: #00ff9a;
 }
 
-// Result Card
 .resultCard {
   background: rgba(0, 0, 0, 0.6);
   border: none;
@@ -368,7 +365,6 @@
   }
 }
 
-// Add some visual enhancements
 .container::before {
   content: '';
   position: absolute;
@@ -396,7 +392,6 @@
   z-index: 0;
 }
 
-// Responsive adjustments
 @media (max-width: 768px) {
   .content {
     padding: var(--spacing-lg);

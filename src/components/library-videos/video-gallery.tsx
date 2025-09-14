@@ -50,13 +50,11 @@ const VideoGallery: FC<IProps> = ({ items }) => {
       }
     };
 
-    // Check after a longer delay to ensure everything is loaded
     const timeoutId = setTimeout(checkAndResetScroll, 200);
 
     return () => clearTimeout(timeoutId);
   }, []);
 
-  // Prevent scroll restoration on page load
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -76,7 +74,6 @@ const VideoGallery: FC<IProps> = ({ items }) => {
 
           const windowHeight = window.innerHeight;
 
-          // Calculate progress based on scroll position
           const scrollTop =
             window.pageYOffset || document.documentElement.scrollTop;
           const documentHeight =

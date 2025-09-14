@@ -149,7 +149,6 @@
   width: 100%;
 }
 
-// Animations
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -207,7 +206,6 @@
   }
 }
 
-// Responsive design
 @media (max-width: 768px) {
   .card {
     width: 95vw;

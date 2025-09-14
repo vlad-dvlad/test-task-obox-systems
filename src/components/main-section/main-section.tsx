@@ -18,19 +18,15 @@ const MainSection = () => {
     window.scrollTo(0, document.body.scrollHeight);
   };
 
-  // Video loading handler
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
 
-  // Preload video in background when component mounts
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      // Set video to preload immediately
       video.preload = 'auto';
 
-      // Add multiple event listeners for better compatibility
       const events = ['loadeddata', 'canplay', 'canplaythrough'];
       events.forEach(event => {
         video.addEventListener(event, handleVideoLoad, { once: true });
@@ -45,12 +41,10 @@ const MainSection = () => {
         { once: true }
       );
 
-      // Force load the video
       video.load();
     }
   }, []);
 
-  // GSAP animations - only start when video is loaded
   useEffect(() => {
     if (
       isVideoLoaded &&
@@ -80,18 +74,16 @@ const MainSection = () => {
           duration: 2,
           ease: 'power2.out',
         }
-      )
-        // Animate video parallax
-        .to(
-          videoRef.current,
-          {
-            y: -30,
-            scale: 1.05,
-            duration: 4,
-            ease: 'none',
-          },
-          '-=2'
-        );
+      ).to(
+        videoRef.current,
+        {
+          y: -30,
+          scale: 1.05,
+          duration: 4,
+          ease: 'none',
+        },
+        '-=2'
+      );
     }
 
     return () => {
@@ -113,7 +105,6 @@ const MainSection = () => {
         poster='/bg-video-poster.jpg'
         crossOrigin='anonymous'
       >
-        {/* Optimized sources for different devices and connections */}
         <source
           src='/bg-video-optimized.mp4'
           type='video/mp4; codecs="avc1.42E01E"'

@@ -12,17 +12,14 @@ const HeroLaunch = () => {
   const scrollButtonRef = useRef<HTMLDivElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  // Video loading handler
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
 
-  // Preload video when component mounts
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
       video.addEventListener('loadeddata', handleVideoLoad);
-      // Start preloading
       video.load();
     }
 
@@ -33,7 +30,6 @@ const HeroLaunch = () => {
     };
   }, []);
 
-  // GSAP animations - only start when video is loaded
   useEffect(() => {
     if (
       isVideoLoaded &&
@@ -100,7 +96,6 @@ const HeroLaunch = () => {
         poster='/initial-bg-poster.jpg'
         crossOrigin='anonymous'
       >
-        {/* Optimized sources for different devices and codec support */}
         <source
           src='/initial-bg-h265.mp4'
           type='video/mp4; codecs="hev1.1.6.L93.B0"'

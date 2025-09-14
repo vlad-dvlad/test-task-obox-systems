@@ -27,7 +27,6 @@
   );
 }
 
-/* Заголовок */
 .title {
   font-size: var(--text-3xl);
   font-weight: bold;
@@ -64,7 +63,6 @@
   }
 }
 
-// Responsive design
 @media (max-width: 768px) {
   .quoteBlock {
     width: 95vw;

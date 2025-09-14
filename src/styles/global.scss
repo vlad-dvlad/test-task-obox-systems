@@ -1,6 +1,5 @@
 @use './variables.scss' as *;
 
-// Global reset
 * {
   margin: 0;
   padding: 0;
@@ -35,23 +34,20 @@ body {
   background-color: #000;
 }
 
-// Hide scrollbar for all browsers
 ::-webkit-scrollbar {
   display: none;
 }
 
 html {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-// Performance optimizations
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Mobile optimizations
 @media (max-width: 768px) {
   * {
     transform: translateZ(0);

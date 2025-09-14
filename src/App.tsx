@@ -29,6 +29,7 @@ const App = () => {
         <Route path={RoutesE.THE_LIBRARY} element={<TheLibrary />} />
         <Route path={RoutesE.ORIGIN_STORIES} element={<OriginStory />} />
         <Route path={RoutesE.SPRITE_ZERO_SUGAR} element={<ZeroSugar />} />
+        <Route path='*' element={<Home />} />
       </Routes>
     </Suspense>
   );

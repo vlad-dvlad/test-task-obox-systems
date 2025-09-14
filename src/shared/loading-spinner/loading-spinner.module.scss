@@ -15,7 +15,6 @@
   border-top: 3px solid var(--neon-green);
 }
 
-// Size variants
 .small {
   width: 30px;
   height: 30px;
@@ -34,7 +33,6 @@
   border-width: 4px;
 }
 
-// Color variants
 .primary {
   .loadingSpinner {
     border-top-color: var(--neon-green);
@@ -64,7 +62,6 @@
   margin: 0;
 }
 
-// Full screen variant
 .fullScreen {
   position: fixed;
   top: 0;
@@ -79,7 +76,6 @@
   z-index: 9999;
 }
 
-// Animation
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -89,7 +85,6 @@
   }
 }
 
-// Responsive
 @media (max-width: 768px) {
   .loadingText {
     font-size: var(--text-base);

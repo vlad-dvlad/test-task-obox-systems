@@ -79,7 +79,6 @@
   border-radius: 20px;
   overflow: hidden;
 
-  // Стилі для ReactPlayer
   :global(.react-player) {
     background: transparent;
   }
@@ -92,7 +91,6 @@
     background: transparent;
   }
 
-  // Приховування зайвих елементів YouTube
   :global(.ytp-chrome-top),
   :global(.ytp-show-cards-title),
   :global(.ytp-endscreen-content),
@@ -100,7 +98,6 @@
     display: none !important;
   }
 
-  // Стилі для YouTube плеєра
   :global(.html5-video-player) {
     background: transparent !important;
   }
@@ -109,7 +106,6 @@
     background: transparent !important;
   }
 
-  // Додаткові стилі для кращого відображення
   :global(.ytp-title) {
     display: none !important;
   }
@@ -122,7 +118,6 @@
     display: none !important;
   }
 
-  // Стилі для iframe
   iframe {
     border-radius: 20px !important;
     overflow: hidden !important;
@@ -130,7 +125,6 @@
     outline: none !important;
   }
 
-  // Додаткові стилі для ReactPlayer
   :global(.react-player__wrapper) {
     border-radius: 20px !important;
     overflow: hidden !important;
@@ -340,7 +334,6 @@
   animation-duration: 7s;
 }
 
-// Keyframe animations
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -413,7 +406,6 @@
   }
 }
 
-// Responsive design
 @media (max-width: 768px) {
   .videoPreview {
     margin: 1rem;
@@ -475,7 +467,6 @@
   }
 }
 
-// Additional hover effects
 .videoPreview:hover {
   .circle1,
   .circle2,

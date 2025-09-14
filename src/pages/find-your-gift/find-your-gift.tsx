@@ -111,11 +111,9 @@ const FindYourGift = () => {
 
   const progress = ((currentStep + 1) / quizQuestions.length) * 100;
 
-  // Initial animation on mount
   useEffect(() => {
     const tl = gsap.timeline();
 
-    // Set initial states
     gsap.set(questionRef.current, {
       opacity: 0,
       y: 80,
@@ -132,7 +130,6 @@ const FindYourGift = () => {
       scaleX: 0,
     });
 
-    // Animate in with staggered timing
     tl.to(progressRef.current, {
       scaleX: 1,
       duration: 0.8,

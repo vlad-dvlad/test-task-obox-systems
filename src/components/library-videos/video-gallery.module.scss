@@ -1,6 +1,5 @@
 @use '../../styles/variables.scss' as *;
 
-// Global styles to prevent auto-scroll
 :global(html) {
   scroll-behavior: auto !important;
 }
@@ -19,14 +18,12 @@
     rgba(0, 0, 0, 0.8) 100%
   );
   scroll-behavior: smooth;
-  scroll-snap-type: none; /* Disable scroll snapping */
-  overflow-anchor: none; /* Disable scroll anchoring */
+  scroll-snap-type: none;
+  overflow-anchor: none;
 
-  /* Prevent browser from auto-scrolling to focused elements */
   scroll-padding-top: 0;
   scroll-margin-top: 0;
 
-  // Add unified background overlay like inspiration garden
   &::before {
     content: '';
     position: absolute;
