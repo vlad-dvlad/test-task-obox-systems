@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './hero-launch.module.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,24 +11,74 @@ const HeroLaunch = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const scrollButtonRef = useRef<HTMLDivElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
 
+  const handleVideoError = () => {
+    setIsVideoLoaded(true);
+  };
+
+  const handleUserInteraction = useCallback(async () => {
+    if (!userInteracted && videoRef.current) {
+      setUserInteracted(true);
+      try {
+        await videoRef.current.play();
+      } catch (error) {
+        console.warn('Failed to play video after user interaction:', error);
+      }
+    }
+  }, [userInteracted]);
+
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', handleVideoLoad);
+      video.muted = true;
+      video.playsInline = true;
+      video.loop = true;
+      video.autoplay = true;
+
+      const events = ['loadeddata', 'canplay', 'canplaythrough'];
+      events.forEach(event => {
+        video.addEventListener(event, handleVideoLoad, { once: true });
+      });
+
+      video.addEventListener('error', handleVideoError, { once: true });
+
       video.load();
+
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          console.warn('Autoplay failed:', error);
+          setIsVideoLoaded(true);
+        }
+      };
+
+      setTimeout(playVideo, 100);
     }
+
+    const interactionEvents = ['click', 'touchstart', 'keydown'];
+    interactionEvents.forEach(event => {
+      document.addEventListener(event, handleUserInteraction, { once: true });
+    });
 
     return () => {
       if (video) {
-        video.removeEventListener('loadeddata', handleVideoLoad);
+        const events = ['loadeddata', 'canplay', 'canplaythrough'];
+        events.forEach((event: string) => {
+          video.removeEventListener(event, handleVideoLoad);
+        });
+        video.removeEventListener('error', handleVideoError);
       }
+      interactionEvents.forEach((event: string) => {
+        document.removeEventListener(event, handleUserInteraction);
+      });
     };
-  }, []);
+  }, [handleUserInteraction]);
 
   useEffect(() => {
     if (
@@ -88,13 +138,17 @@ const HeroLaunch = () => {
       <video
         ref={videoRef}
         className={`${styles.video} ${isVideoLoaded ? styles.videoLoaded : styles.videoLoading}`}
-        autoPlay={isVideoLoaded}
+        autoPlay
         loop
         muted
         playsInline
         preload='auto'
         poster='/initial-bg-poster.jpg'
         crossOrigin='anonymous'
+        webkit-playsinline='true'
+        x5-playsinline='true'
+        x5-video-player-type='h5'
+        x5-video-player-fullscreen='true'
       >
         <source
           src='/initial-bg-h265.mp4'

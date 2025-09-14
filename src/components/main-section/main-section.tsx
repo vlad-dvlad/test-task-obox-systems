@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { HintModal, CinematicButton } from '../../shared';
 import styles from './main-section.module.scss';
 import { HexagonalMenu } from '../';
@@ -13,6 +13,7 @@ const MainSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   const scrollToBottom = () => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -22,9 +23,29 @@ const MainSection = () => {
     setIsVideoLoaded(true);
   };
 
+  const handleVideoError = () => {
+    console.warn('Video failed to load, using fallback');
+    setIsVideoLoaded(true);
+  };
+
+  const handleUserInteraction = useCallback(async () => {
+    if (!userInteracted && videoRef.current) {
+      setUserInteracted(true);
+      try {
+        await videoRef.current.play();
+      } catch (error) {
+        console.warn('Failed to play video after user interaction:', error);
+      }
+    }
+  }, [userInteracted]);
+
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
+      video.muted = true;
+      video.playsInline = true;
+      video.loop = true;
+      video.autoplay = true;
       video.preload = 'auto';
 
       const events = ['loadeddata', 'canplay', 'canplaythrough'];
@@ -32,18 +53,33 @@ const MainSection = () => {
         video.addEventListener(event, handleVideoLoad, { once: true });
       });
 
-      video.addEventListener(
-        'error',
-        () => {
-          console.warn('Video failed to load, using fallback');
-          setIsVideoLoaded(true);
-        },
-        { once: true }
-      );
+      video.addEventListener('error', handleVideoError, { once: true });
 
       video.load();
+
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          console.warn('Autoplay failed:', error);
+          setIsVideoLoaded(true);
+        }
+      };
+
+      setTimeout(playVideo, 100);
     }
-  }, []);
+
+    const interactionEvents = ['click', 'touchstart', 'keydown'];
+    interactionEvents.forEach(event => {
+      document.addEventListener(event, handleUserInteraction, { once: true });
+    });
+
+    return () => {
+      interactionEvents.forEach((event: string) => {
+        document.removeEventListener(event, handleUserInteraction);
+      });
+    };
+  }, [userInteracted, handleUserInteraction]);
 
   useEffect(() => {
     if (
@@ -97,13 +133,17 @@ const MainSection = () => {
       <video
         ref={videoRef}
         className={`${styles.video} ${isVideoLoaded ? styles.videoLoaded : styles.videoLoading}`}
-        autoPlay={isVideoLoaded}
+        autoPlay
         loop
         muted
         playsInline
         preload='auto'
         poster='/bg-video-poster.jpg'
         crossOrigin='anonymous'
+        webkit-playsinline='true'
+        x5-playsinline='true'
+        x5-video-player-type='h5'
+        x5-video-player-fullscreen='true'
       >
         <source
           src='/bg-video-optimized.mp4'

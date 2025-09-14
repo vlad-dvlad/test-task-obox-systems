@@ -77,6 +77,33 @@
   gap: 2rem;
 }
 
+.playButton {
+  background: rgba(0, 255, 154, 0.2);
+  border: 2px solid #00ff9a;
+  border-radius: 50px;
+  color: #00ff9a;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:hover {
+    background: rgba(0, 255, 154, 0.3);
+    border-color: #00ffff;
+    color: #00ffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 154, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 .neonText {
   color: var(--white);
   font-size: var(--text-4xl);
