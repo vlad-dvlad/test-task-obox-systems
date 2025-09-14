@@ -20,6 +20,9 @@ const VideoGallery: FC<IProps> = ({ items }) => {
   const videoRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [visibleVideos, setVisibleVideos] = useState<Set<number>>(new Set());
+  const [playingVideoIndex, setPlayingVideoIndex] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const resetScroll = () => {
@@ -33,6 +36,7 @@ const VideoGallery: FC<IProps> = ({ items }) => {
 
     setScrollProgress(0);
     setVisibleVideos(new Set());
+    setPlayingVideoIndex(null);
 
     return () => clearTimeout(timeoutId);
   }, [location.pathname]);
@@ -127,24 +131,34 @@ const VideoGallery: FC<IProps> = ({ items }) => {
     };
   }, []);
 
+  const handleVideoPlay = (index: number) => {
+    setPlayingVideoIndex(index);
+  };
+
+  const handleVideoPause = () => {
+    setPlayingVideoIndex(null);
+  };
+
   return (
     <div ref={containerRef} className={styles.container}>
-      <div className={styles.progressBar}>
-        <div
-          className={styles.progressFill}
-          style={{ height: `${scrollProgress * 100}%` }}
-        />
-        <div className={styles.progressDots}>
-          {items.map((_, index) => (
-            <div
-              key={index}
-              className={`${styles.progressDot} ${
-                visibleVideos.has(index) ? styles.active : ''
-              }`}
-            />
-          ))}
+      {items.length > 1 && (
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progressFill}
+            style={{ height: `${scrollProgress * 100}%` }}
+          />
+          <div className={styles.progressDots}>
+            {items.map((_, index) => (
+              <div
+                key={index}
+                className={`${styles.progressDot} ${
+                  visibleVideos.has(index) ? styles.active : ''
+                }`}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <BackToHomeButton />
       {items.map((video, index) => (
@@ -159,7 +173,12 @@ const VideoGallery: FC<IProps> = ({ items }) => {
             style={{ width: '100%' }}
             className={styles.videoWrapper}
           >
-            <VideoPreview {...video} />
+            <VideoPreview
+              {...video}
+              isPlaying={playingVideoIndex === index}
+              onPlay={() => handleVideoPlay(index)}
+              onPause={handleVideoPause}
+            />
           </div>
         </div>
       ))}

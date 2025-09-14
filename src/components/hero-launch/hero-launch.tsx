@@ -96,15 +96,26 @@ const HeroLaunch = () => {
         loop
         muted
         playsInline
-        preload='metadata'
+        preload='auto'
         poster='/initial-bg-poster.jpg'
+        crossOrigin='anonymous'
       >
+        {/* Optimized sources for different devices and codec support */}
         <source
           src='/initial-bg-h265.mp4'
           type='video/mp4; codecs="hev1.1.6.L93.B0"'
+          media='(min-width: 1024px)'
         />
-        <source src='/initial-bg.webm' type='video/webm' />
-        <source src='/initial-bg-1080p.mp4' type='video/mp4' />
+        <source
+          src='/initial-bg.webm'
+          type='video/webm'
+          media='(min-width: 768px)'
+        />
+        <source
+          src='/initial-bg-1080p.mp4'
+          type='video/mp4'
+          media='(min-width: 1024px)'
+        />
         <source src='/initial-bg-optimized.mp4' type='video/mp4' />
         Your browser does not support the video tag.
       </video>

@@ -23,20 +23,31 @@ const MainSection = () => {
     setIsVideoLoaded(true);
   };
 
-  // Preload video when component mounts
+  // Preload video in background when component mounts
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', handleVideoLoad);
-      // Start preloading
+      // Set video to preload immediately
+      video.preload = 'auto';
+
+      // Add multiple event listeners for better compatibility
+      const events = ['loadeddata', 'canplay', 'canplaythrough'];
+      events.forEach(event => {
+        video.addEventListener(event, handleVideoLoad, { once: true });
+      });
+
+      video.addEventListener(
+        'error',
+        () => {
+          console.warn('Video failed to load, using fallback');
+          setIsVideoLoaded(true);
+        },
+        { once: true }
+      );
+
+      // Force load the video
       video.load();
     }
-
-    return () => {
-      if (video) {
-        video.removeEventListener('loadeddata', handleVideoLoad);
-      }
-    };
   }, []);
 
   // GSAP animations - only start when video is loaded
@@ -98,11 +109,22 @@ const MainSection = () => {
         loop
         muted
         playsInline
-        preload='metadata'
+        preload='auto'
         poster='/bg-video-poster.jpg'
+        crossOrigin='anonymous'
       >
+        {/* Optimized sources for different devices and connections */}
+        <source
+          src='/bg-video-optimized.mp4'
+          type='video/mp4; codecs="avc1.42E01E"'
+          media='(min-width: 1024px)'
+        />
+        <source
+          src='/bg-video.mp4'
+          type='video/mp4'
+          media='(max-width: 1023px)'
+        />
         <source src='/bg-video-optimized.mp4' type='video/mp4' />
-        <source src='/bg-video.mp4' type='video/mp4' />
         Your browser does not support the video tag.
       </video>
       <div className={styles.overlay}></div>
